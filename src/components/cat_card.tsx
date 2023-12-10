@@ -20,11 +20,14 @@ interface catCardCProps {
   indexNumber: number;
 }
 
-const CatCard: React.FC<catCardCProps> = (cat) => {
-  console.log(
-    "CatCard receiving props from App?! Come in App?! 😸 Props received are: ",
-    cat
-  );
+const CatCard: React.FC<catCardCProps> = ({
+  name,
+  species,
+  favFoods,
+  date,
+  indexNumber,
+}) => {
+  //const { name, species, favFoods, date, indexNumber } = cat;
 
   const images = [
     {
@@ -125,20 +128,25 @@ const CatCard: React.FC<catCardCProps> = (cat) => {
     },
   ];
 
+  console.log(images.length);
+
   return (
     <div className="card">
-      <h3 className="card__text card__header">{cat.name}</h3>
-      <p className="card__text">Species: {cat.species}</p>
-      <CatImage
-        image={images[cat.indexNumber].image}
-        altText={images[cat.indexNumber].altText}
-        licenseType={images[cat.indexNumber].licenceType}
-        licenseURL={images[cat.indexNumber].licenceUrl}
-        attributionURL={images[cat.indexNumber].attributionUrl}
-        atributionName={images[cat.indexNumber].attributionName}
-      />
-      <p className="card__text">favFoods: {cat.favFoods}</p>
-      <p className="card__text">Date: {cat.date}</p>
+      <h3 className="card__text card__header">{name}</h3>
+      <p className="card__text">Species: {species}</p>
+      {indexNumber < images.length && (
+        <CatImage
+          image={images[indexNumber].image}
+          altText={images[indexNumber].altText}
+          licenseType={images[indexNumber].licenceType}
+          licenseURL={images[indexNumber].licenceUrl}
+          attributionURL={images[indexNumber].attributionUrl}
+          atributionName={images[indexNumber].attributionName}
+        />
+      )}
+
+      <p className="card__text">favFoods: {favFoods}</p>
+      <p className="card__text">Date: {date}</p>
     </div>
   );
 };
