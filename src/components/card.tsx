@@ -12,19 +12,19 @@ import cat10 from "../assets/images/cat10.jpg";
 import cat11 from "../assets/images/cat11.jpg";
 import cat12 from "../assets/images/cat12.jpg";
 
-interface catCardCProps {
+interface CardCProps {
   name: string;
   species: string;
   favFoods: string[];
-  date: number;
+  birthYear: number;
   indexNumber: number;
 }
 
-const CatCard: React.FC<catCardCProps> = ({
+const Card: React.FC<CardCProps> = ({
   name,
   species,
   favFoods,
-  date,
+  birthYear,
   indexNumber,
 }) => {
   //const { name, species, favFoods, date, indexNumber } = cat;
@@ -128,8 +128,6 @@ const CatCard: React.FC<catCardCProps> = ({
     },
   ];
 
-  console.log(images.length);
-
   return (
     <div className="card">
       <h3 className="card__text card__header">{name}</h3>
@@ -145,10 +143,10 @@ const CatCard: React.FC<catCardCProps> = ({
         />
       )}
 
-      <p className="card__text">favFoods: {favFoods}</p>
-      <p className="card__text">Date: {date}</p>
+      <p className="card__text">favFoods: {favFoods + ","} </p>
+      <p className="card__text">Date: {birthYear}</p>
     </div>
   );
 };
 
-export default CatCard;
+export default Card;

@@ -2,12 +2,12 @@ import "./App.css";
 import Navbar from "./components/navbar";
 import Header from "./components/header";
 import Footer from "./components/footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cat from "../src/data/cat";
 import Dog from "./data/dog";
-import CatCard from "./components/cat_card";
-import DogCard from "./components/dog_card";
+import Card from "./components/card";
 import { v4 as uuidv4 } from "uuid";
+import Form from "./components/form";
 
 const catData: Array<Cat> = [
   {
@@ -117,43 +117,75 @@ catData.forEach((cat) => (cat.id = uuidv4()));
 
 function App(): JSX.Element {
   // JavaScript/TypeScript code can be inserted here!
-  const [catNumber, setCatNumber] = useState(0);
 
   const [cats, setCats] = useState<Array<Cat>>(catData);
 
   const [dogs, setDogs] = useState<Array<Dog>>(dogData);
 
+  const [saveName, setSaveName] = useState("");
+
+  const [saveSpecies, setSaveSpecies] = useState("");
+
+  const [saveFavFoods, setFavFoods] = useState<string[]>([]);
+
+  const [saveBirthYear, setBirthYear] = useState(0);
+
   const catNum = cats.length;
+  const dogNum = dogData.length;
+  //i need to connect this to whenever the form is submitted
+  useEffect(() => {
+    setCats([
+      ...cats,
+      {
+        name: saveName,
+        species: saveSpecies,
+        favFoods: saveFavFoods,
+        birthYear: saveBirthYear,
+      },
+    ]);
+  }, []);
+
+  console.log(cats);
 
   return (
     <>
       <Navbar />
-      <Header catNumber={catNum} />
+      <Header catNumber={catNum} dogNumber={dogNum} />
 
       <main>
         <div className="cards__wrapper">
           {cats.map((cat, index) => (
-            <CatCard
+            <Card
               key={cat.id}
               name={cat.name}
               species={cat.species}
               favFoods={cat.favFoods}
-              date={cat.birthYear}
+              birthYear={cat.birthYear}
               indexNumber={index}
             />
           ))}
-          {dogs.map((dog) => (
-            <DogCard
+          {dogs.map((dog, index) => (
+            <Card
               key={dog.id}
               name={dog.name}
               species={dog.species}
               favFoods={dog.favFoods}
               birthYear={dog.birthYear}
+              indexNumber={index}
             />
           ))}
         </div>
       </main>
-
+      <Form
+        name={saveName}
+        onChangeName={(value) => setSaveName(value)}
+        species={saveSpecies}
+        onChangeSpecies={(value) => setSaveSpecies(value)}
+        favFoods={saveFavFoods}
+        onChangeFavFoods={(value) => setFavFoods(value)}
+        birthYear={saveBirthYear}
+        onChangeBirthYear={(value) => setBirthYear(value)}
+      />
       <Footer />
     </>
   );
